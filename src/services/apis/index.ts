@@ -3,7 +3,7 @@ import { ProductResponseType } from "./product.types";
 
 export const GetAllProductsApi = async (): Promise<ProductResponseType[]> => {
   try {
-    const url = "/prodcts";
+    const url = "/products";
     const res = await axios.get<ProductResponseType[]>(url);
     return res.data;
   } catch (err) {
