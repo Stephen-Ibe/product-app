@@ -30,4 +30,7 @@ body {
   .products--container {
     @apply grid grid-cols-4 gap-10;
   }
+  .product--detail h4 {
+    @apply text-lg;
+  }
 }

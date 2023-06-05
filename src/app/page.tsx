@@ -9,11 +9,17 @@ export default async function Home() {
       <div className="container py-20 mx-auto">
         <div className="products--container">
           {products.map(({ id, image, price, title }) => (
-            <div className="border product h-[300px]" key={id}>
-              <div className="h-[70%]">
-                <Image src={image} alt={title} width={500} height={500} />
+            <div className="product h-[500px]" key={id}>
+              <div className="h-[75%] relative w-full">
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  className="absolute object-cover"
+                  object-fit="cover"
+                />
               </div>
-              <div className="h-[30%] px-2">
+              <div className="h-[25%] p-y-2 product--detail">
                 <h4>{title}</h4>
                 <p>${price}</p>
               </div>
