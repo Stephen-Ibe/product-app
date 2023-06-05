@@ -25,7 +25,9 @@ export default function Home() {
     }
   };
 
-  const a
+  const addToCart = (id:number) => {
+    conosle.log(id)
+  };
 
   useEffect(() => {
     fetchAllProducts();
@@ -79,7 +81,9 @@ export default function Home() {
                 <h4>{title}</h4>
                 <div className="flex items-center justify-between">
                   <p>${price}</p>
-                  <button className="border px-2 rounded text-sm py-1">Add to Cart</button>
+                  <button className="border px-2 rounded text-sm py-1 hover:bg-white hover:text-black" onClick={()=>addToCart(id)}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>

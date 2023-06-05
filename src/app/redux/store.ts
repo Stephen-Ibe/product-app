@@ -1,10 +1,11 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { productReducer } from "./slices";
+import { cartReducer, productReducer } from "./slices";
 
 export const store = configureStore({
   reducer: {
+    cart: cartReducer,
     product: productReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
