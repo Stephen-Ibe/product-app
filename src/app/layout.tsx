@@ -1,7 +1,7 @@
-import { store } from "@/redux/store";
+import { store } from "@/app/redux/store";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Providers } from "@/redux/provider";
+import { Providers } from "@/app/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
