@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ChangeEvent, useEffect } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { cartActions, productActions } from "./redux/slices";
 
 export default function Home() {
@@ -32,8 +33,7 @@ export default function Home() {
 
   const addToCart = (id: number) => {
     dispatch(cartActions.addProductToCart(id));
-
-    checkIfProductExists(id);
+    toast.success("Item added to cart");
   };
 
   useEffect(() => {

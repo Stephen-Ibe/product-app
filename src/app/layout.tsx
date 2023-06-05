@@ -1,7 +1,9 @@
-import { store } from "@/app/redux/store";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { Inter } from "next/font/google";
+
 import { Providers } from "@/app/redux/provider";
+import { Inter } from "next/font/google";
+import { Slide, ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar
+            closeOnClick
+            transition={Slide}
+            role="alert"
+            closeButton={false}
+          />
+        </Providers>
       </body>
     </html>
   );

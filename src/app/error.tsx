@@ -1,6 +1,7 @@
 "use client"; // Error components must be Client Components
 
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function Error({
   error,
@@ -10,8 +11,8 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    alert(error.message);
+
+    toast.error(error.message);
   }, [error]);
 
   return (
