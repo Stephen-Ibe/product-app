@@ -1,18 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { GetAllProductsApi } from "@/services";
 import Image from "next/image";
 import { ChangeEvent, useEffect } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "./redux/slices";
+import { cartActions, productActions } from "./redux/slices";
 
 export default function Home() {
-  const allProducts = useSelector((state: RootState) => state.product.products);
-  const [products, setProducts] = useState<any | any[]>([]);
-
   const dispatch = useDispatch<AppDispatch>();
+  const allProducts = useSelector((state: RootState) => state.product.products);
+  const cart = useSelector((state: RootState) => state.cart.cart);
+
+  const [products, setProducts] = useState<any | any[]>([]);
 
   const fetchAllProducts = async () => {
     try {
@@ -25,8 +26,14 @@ export default function Home() {
     }
   };
 
-  const addToCart = (id:number) => {
-    conosle.log(id)
+  const checkIfProductExists = (id: number) => {
+    return cart.some((e: any) => e === id);
+  };
+
+  const addToCart = (id: number) => {
+    dispatch(cartActions.addProductToCart(id));
+
+    checkIfProductExists(id);
   };
 
   useEffect(() => {
@@ -49,26 +56,26 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between min-h-screen">
       <div className="container py-20 mx-auto space-y-20">
-        <div className="w-full flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <div className="w-10/12">
             <input
               type="search"
-              className="w-full py-2 px-4 border-b-2 bg-transparent outline-none"
+              className="w-full px-4 py-2 bg-transparent border-b-2 outline-none"
               placeholder="Search for product..."
               onChange={handleInputChange}
             />
           </div>
           <div className="flex items-center justify-center gap-x-2">
             <BsCart4 size={30} />
-            <p className="text-sm border h-8 w-8 flex items-center justify-center rounded-full">
-              4
+            <p className="flex items-center justify-center w-8 h-8 text-sm border rounded-full">
+              {cart.length}
             </p>
           </div>
         </div>
         <div className="products--container">
           {products.map(({ category, id, image, price, title }: any) => (
             <div className="product h-[500px]" key={id}>
-              <div className="h-[75%] relative w-full rounded-t-lg">
+              <div className="h-[70%] relative w-full rounded-t-lg">
                 <Image
                   src={image}
                   alt={title}
@@ -77,13 +84,20 @@ export default function Home() {
                   object-fit="contain"
                 />
               </div>
-              <div className="h-[25%] p-2 product--detail">
+              <div className="h-[30%] p-2 product--detail">
                 <h4>{title}</h4>
                 <div className="flex items-center justify-between">
                   <p>${price}</p>
-                  <button className="border px-2 rounded text-sm py-1 hover:bg-white hover:text-black" onClick={()=>addToCart(id)}>
-                    Add to Cart
-                  </button>
+                  {checkIfProductExists(id) ? (
+                    "Item in Cart"
+                  ) : (
+                    <button
+                      className="px-2 py-1 text-sm border rounded hover:bg-white hover:text-black"
+                      onClick={() => addToCart(id)}
+                    >
+                      Add to Cart
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

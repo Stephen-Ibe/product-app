@@ -11,7 +11,7 @@ export const GetAllProductsApi = async (): Promise<ProductResponseType[]> => {
   }
 };
 
-export const GetSingleProduct = async () => {
+export const GetSingleProductApi = async () => {
   try {
     const url = "/products";
     const res = await axios.get(url);
