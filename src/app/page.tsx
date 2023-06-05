@@ -9,6 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { cartActions, productActions } from "./redux/slices";
 
+const sortPriceOptions = [
+  { id: 0, name: "Default", value: "all" },
+  { id: 1, name: "Ascending", value: "asc" },
+  { id: 2, name: "Descending", value: "desc" },
+];
+
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const allProducts = useSelector((state: RootState) => state.product.products);
@@ -53,10 +59,32 @@ export default function Home() {
     }
   };
 
+  const sortItem = (sortOrder: string) => {
+    const sortedItem: any = [...allProducts].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.price - b.price;
+      } else {
+        return b.price - a.price;
+      }
+    });
+
+    setProducts(sortedItem);
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+
+    if (value === "all") {
+      setProducts(allProducts);
+    } else {
+      sortItem(value);
+    }
+  };
+
   return (
     <main className="flex flex-col items-center justify-between min-h-screen">
       <div className="container py-20 mx-auto space-y-20">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full px-10 md:px-0">
           <div className="w-10/12">
             <input
               type="search"
@@ -64,6 +92,18 @@ export default function Home() {
               placeholder="Search for product..."
               onChange={handleInputChange}
             />
+          </div>
+          <div>
+            <select
+              className="pl-4 bg-transparent"
+              onChange={handleSelectChange}
+            >
+              {sortPriceOptions.map(({ id, name, value }) => (
+                <option value={value} key={id}>
+                  {name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex items-center justify-center gap-x-2">
             <BsCart4 size={30} />
