@@ -1,9 +1,10 @@
 import axios from "../axios";
+import { ProductResponseType } from "./product.types";
 
-export const GetAllProductsApi = async () => {
+export const GetAllProductsApi = async (): Promise<ProductResponseType[]> => {
   try {
-    const url = "/products";
-    const res = await axios.get(url);
+    const url = "/prodcts";
+    const res = await axios.get<ProductResponseType[]>(url);
     return res.data;
   } catch (err) {
     throw err;
