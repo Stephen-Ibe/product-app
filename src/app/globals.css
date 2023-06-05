@@ -28,9 +28,12 @@ body {
 
 @layer components {
   .products--container {
-    @apply grid grid-cols-4 gap-10;
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10;
+  }
+  .product--detail {
+    @apply border-8 border-white flex flex-col justify-between capitalize;
   }
   .product--detail h4 {
-    @apply text-lg;
+    @apply text-base font-semibold;
   }
 }
